@@ -10,7 +10,8 @@ const SaveInput = () => {
 
   return (
     <>
-      <button onClick={handclick}>but</button>
+
+      <button onClick={handclick}>Add it to the list</button>
     </>
   );
 };
