@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import SaveInput from "./component/saveInput";
+import { TodoItem } from "./component/TodoItem";
+
 const App = () => {
   const [newTodoName, setNewTodoName] = useState("") // input
   const [todos, setTodos] = useState([]) // task list
@@ -31,7 +32,7 @@ const App = () => {
       </div>
       <button onClick={addNewTodo}>add to do</button>
       <ul>
-        {todos.map((todo, index) => (<li key={todo.id}><label><input type="checkbox" checked={todo.completed} onChange={(e) => toggleTodo(todo.id, e.target.checked)} /> {todo.name}</label> <button onClick={() => deleteTodo(todo.id)}>Delete</button></li>))}
+        {todos.map((todo) => (<TodoItem key={todo.id}{...todo} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />))}
       </ul>
     </>
   );
