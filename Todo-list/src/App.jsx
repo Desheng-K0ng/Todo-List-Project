@@ -10,7 +10,8 @@ const App = () => {
   const [todos, setTodos] = useState([]); // task list
   const todoCountRef = useRef(0); // use ref for count the number of todos
 
-  function addNewTodo() {
+  function addNewTodo(e) {
+    e.preventDefault();
     if (newTodoName === "") return; // prevent from enter nothing
 
     setTodos([
@@ -59,7 +60,7 @@ const App = () => {
           Change Mode is now : {isDarkMode ? "Dark" : "White"}
         </button>
         <p>The length of the todos is now {todos.length}</p>
-        <div id="new-todo-form">
+        <form onSubmit={addNewTodo} id="new-todo-form">
           <label htmlFor="todo-input">New Todo</label>
           <input
             placeholder="Enter new todo"
@@ -70,7 +71,7 @@ const App = () => {
             onChange={(e) => setNewTodoName(e.target.value)}
           />
           <button onClick={addNewTodo}>Add Todo</button>
-        </div>
+        </form>
         <ul id="list">
           {todos.map((todo) => (
             <TodoItem
