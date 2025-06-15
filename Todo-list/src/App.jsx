@@ -1,12 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import { TodoItem } from "./component/TodoItem";
+import { useToggle } from "./component/useToggle";
 import "./style.css";
 
 const App = () => {
   const [newTodoName, setNewTodoName] = useState(""); // input
+  const [isDarkMode, toggleDarkMode] = useToggle(false);
   const [todos, setTodos] = useState([]); // task list
-  const todoCountRef = useRef(0); // use ref for count the number of todos 
+  const todoCountRef = useRef(0); // use ref for count the number of todos
 
   function addNewTodo() {
     if (newTodoName === "") return; // prevent from enter nothing
@@ -33,7 +35,7 @@ const App = () => {
   useEffect(() => {
     todoCountRef.current = todos.length;
     console.log("The number of todos is now ", todoCountRef.current);
-  }, [todos])
+  }, [todos]);
   // do something while todos array changes/updates
 
   function deleteTodo(id) {
@@ -41,31 +43,45 @@ const App = () => {
     // filter all the todos but not the same id one
   }
 
+  useEffect(() => {
+    console.log("Mode is now Dark? ", isDarkMode);
+  }, [isDarkMode]);
+
   return (
     <>
-      <p>The length of the todos is now {todos.length}</p>
-      <div id="new-todo-form">
-        <label htmlFor="todo-input">New Todo</label>
-        <input
-          placeholder="Enter new todo"
-          type="text"
-          id="todo-input"
-          value={newTodoName}
-          onChange={(e) => setNewTodoName(e.target.value)}
-        />
-        <button onClick={addNewTodo}>Add Todo</button>
-      </div>
-      <ul id="list">
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            toggleTodo={toggleTodo}
-            deleteTodo={deleteTodo}
+      <div
+        style={{
+          background: isDarkMode ? "#333" : "white",
+          color: isDarkMode ? "white" : "#333",
+        }}
+      >
+        <button onClick={toggleDarkMode}>
+          Change Mode is now : {isDarkMode ? "Dark" : "White"}
+        </button>
+        <p>The length of the todos is now {todos.length}</p>
+        <div id="new-todo-form">
+          <label htmlFor="todo-input">New Todo</label>
+          <input
+            placeholder="Enter new todo"
+            type="text"
+            id="todo-input"
+            value={newTodoName}
+            autoComplete="off" // off auto fill
+            onChange={(e) => setNewTodoName(e.target.value)}
           />
-        ))}
-      </ul>
-
+          <button onClick={addNewTodo}>Add Todo</button>
+        </div>
+        <ul id="list">
+          {todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              {...todo}
+              toggleTodo={toggleTodo}
+              deleteTodo={deleteTodo}
+            />
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
