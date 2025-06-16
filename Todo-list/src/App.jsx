@@ -20,6 +20,7 @@ const App = () => {
         id: crypto.randomUUID(), // have its own id
         name: newTodoName,
         completed: false,
+        isEditing: false, // initial state
       },
     ]); // add new todos
     setNewTodoName(""); // clear the input block
@@ -33,9 +34,27 @@ const App = () => {
     // if is not the one dont do anything
   }
 
+  function editTodo(id) {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, isEditing: true } : todo
+      )
+    );
+  }
+
+  function saveTodo(id, newName) {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, newTodoName: newName, isEditing: false }
+          : todo
+      )
+    );
+  }
+
   useEffect(() => {
     todoCountRef.current = todos.length;
-    console.log("The number of todos is now ", todoCountRef.current);
+    //console.log("The number of todos is now ", todoCountRef.current);
   }, [todos]);
   // do something while todos array changes/updates
 
@@ -45,7 +64,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log("Mode is now Dark? ", isDarkMode);
+    //console.log("Mode is now Dark? ", isDarkMode);
   }, [isDarkMode]);
 
   return (
@@ -79,6 +98,8 @@ const App = () => {
               {...todo}
               toggleTodo={toggleTodo}
               deleteTodo={deleteTodo}
+              editTodo={editTodo}
+              saveTodo={saveTodo}
             />
           ))}
         </ul>
