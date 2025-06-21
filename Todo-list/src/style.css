@@ -4,7 +4,7 @@
   max-width: 300px;
 }
 
-#new-todo-form > * {
+#new-todo-form>* {
   margin: 0.15rem;
 }
 
@@ -21,12 +21,12 @@
   cursor: pointer;
 }
 
-.list-item-label:hover > [data-list-item-text] {
+.list-item-label:hover>[data-list-item-text] {
   color: #333;
   text-decoration: line-through;
 }
 
-[data-list-item-checkbox]:checked ~ [data-list-item-text] {
+[data-list-item-checkbox]:checked~[data-list-item-text] {
   text-decoration: line-through;
   color: #aaa;
 }
@@ -60,4 +60,10 @@ button {
 button {
   user-select: none;
   caret-color: transparent;
+}
+
+.card {
+  background-color: rgb(17, 255, 179);
+  width: 300px;
+  height: auto;
 }

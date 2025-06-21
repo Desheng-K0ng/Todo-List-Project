@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TodoItem } from "./component/TodoItem";
 import { useToggle } from "./component/useToggle";
 import "./style.css";
+import Card from "./component/Card";
 
 const App = () => {
   const [newTodoName, setNewTodoName] = useState(""); // input
@@ -44,11 +45,13 @@ const App = () => {
 
   function saveTodo(id, newName) {
     setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, newTodoName: newName, isEditing: false }
-          : todo
-      )
+      todos.map((todo) => {
+        if (todo.id === id) {
+          const finalName = newName.trim() ? newName : todo.name;
+          return { ...todo, name: finalName, isEditing: false };
+        }
+        return todo;
+      })
     );
   }
 
@@ -89,7 +92,7 @@ const App = () => {
             autoComplete="off" // off auto fill
             onChange={(e) => setNewTodoName(e.target.value)}
           />
-          <button onClick={addNewTodo}>Add Todo</button>
+          <button onClick={addNewTodo}>Add New Todo</button>
         </form>
         <ul id="list">
           {todos.map((todo) => (
@@ -104,6 +107,7 @@ const App = () => {
           ))}
         </ul>
       </div>
+      {/* <Card /> */}
     </>
   );
 };
