@@ -5,34 +5,46 @@ import { useToggle } from "./component/useToggle";
 import "./style.css";
 import Card from "./component/Card";
 
+
 const App = () => {
   const [newTodoName, setNewTodoName] = useState(""); // input
   const [isDarkMode, toggleDarkMode] = useToggle(false);
   const [todos, setTodos] = useState([]); // task list
+  const [description, setDescription] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
   const todoCountRef = useRef(0); // use ref for count the number of todos
 
   function addNewTodo(e) {
     e.preventDefault();
-    if (newTodoName === "") return; // prevent from enter nothing
+
+
+    if (newTodoName.trim() === "" || description.trim() === "") {
+      setToastMessage("Title and Description cannot be empty!");
+
+      // 2秒后自动清除消息
+      setTimeout(() => {
+        setToastMessage("");
+      }, 2000);
+
+      return;
+    }
+
+    // prevent from enter nothing
 
     setTodos([
       ...todos,
       {
         id: crypto.randomUUID(), // have its own id
         name: newTodoName,
+        description: description,
         completed: false,
         isEditing: false, // initial state
       },
     ]); // add new todos
-    setNewTodoName(""); // clear the input block
-  }
 
-  function toggleTodo(id, completed) {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, completed } : todo))
-    );
-    // map all the todos find the clicked one and and set it to complete or not
-    // if is not the one dont do anything
+    // clear everything filled in the put block
+    setNewTodoName("");
+
   }
 
   function editTodo(id) {
@@ -43,12 +55,13 @@ const App = () => {
     );
   }
 
-  function saveTodo(id, newName) {
+  function saveTodo(id, newName, newDescription) {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
           const finalName = newName.trim() ? newName : todo.name;
-          return { ...todo, name: finalName, isEditing: false };
+          const editDescription = newDescription.trim() ? newDescription : todo.description;
+          return { ...todo, name: finalName, description: editDescription, isEditing: false };
         }
         return todo;
       })
@@ -72,6 +85,9 @@ const App = () => {
 
   return (
     <>
+      {toastMessage && (
+        <div className="toast">{toastMessage}</div>
+      )}
       <div
         style={{
           background: isDarkMode ? "#333" : "white",
@@ -82,24 +98,20 @@ const App = () => {
           Change Mode is now : {isDarkMode ? "Dark" : "White"}
         </button>
         <p>The length of the todos is now {todos.length}</p>
-        <form onSubmit={addNewTodo} id="new-todo-form">
-          <label htmlFor="todo-input">New Todo</label>
-          <input
-            placeholder="Enter new todo"
-            type="text"
-            id="todo-input"
-            value={newTodoName}
-            autoComplete="off" // off auto fill
-            onChange={(e) => setNewTodoName(e.target.value)}
-          />
-          <button onClick={addNewTodo}>Add New Todo</button>
-        </form>
+
+        <Card
+          newTodoName={newTodoName}
+          description={description}
+          setNewTodoName={setNewTodoName}
+          setDescription={setDescription}
+          addNewTodo={addNewTodo}
+        />
+
         <ul id="list">
           {todos.map((todo) => (
             <TodoItem
               key={todo.id}
               {...todo}
-              toggleTodo={toggleTodo}
               deleteTodo={deleteTodo}
               editTodo={editTodo}
               saveTodo={saveTodo}
@@ -107,7 +119,6 @@ const App = () => {
           ))}
         </ul>
       </div>
-      {/* <Card /> */}
     </>
   );
 };

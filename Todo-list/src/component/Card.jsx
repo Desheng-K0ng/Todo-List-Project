@@ -1,16 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Card = () => {
-    return (
-        <div className="card">
-            {/* <img src="https://via.placeholder.com/300x180" alt="Card Image" /> */}
-            <div className="card-content">
-                <h3 className="card-title">Card Title</h3>
-                <p className="card-text">This is a simple card description. You can add more text here to make it longer.</p>
-                <a href="#" className="card-button">Learn More</a>
+const Card =
+    ({
+        newTodoName,
+        description,
+        setNewTodoName,
+        setDescription,
+        addNewTodo,
+
+    }) => {
+
+        return (
+            <div className="addCard">
+
+                <form onSubmit={addNewTodo} >
+
+                    <div className="card-content">
+                        <h3 className="card-title">Todo Title</h3>
+                        <input
+                            type="text"
+                            placeholder="Title"
+                            value={newTodoName}
+                            onChange={(e) => setNewTodoName(e.target.value)}
+                        />
+                        <h3 className="card-title">Todo Details</h3>
+                        <textarea
+                            placeholder="Description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <br />
+                        <button onClick={addNewTodo} >Add New Todo</button>
+                    </div>
+                </form>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 export default Card;

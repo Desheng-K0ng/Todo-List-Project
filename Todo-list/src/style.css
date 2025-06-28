@@ -1,69 +1,48 @@
+h3 {
+  margin: 0;
+}
+
 #new-todo-form {
   display: flex;
   flex-direction: column;
-  max-width: 300px;
 }
 
-#new-todo-form>* {
-  margin: 0.15rem;
-}
-
-#list {
+ul {
   padding: 0;
 }
 
 .list-item {
   list-style: none;
+  margin-bottom: 1rem;
 }
 
-.list-item-label:hover,
-[data-list-item-checkbox]:hover {
+button {
   cursor: pointer;
-}
-
-.list-item-label:hover>[data-list-item-text] {
-  color: #333;
-  text-decoration: line-through;
-}
-
-[data-list-item-checkbox]:checked~[data-list-item-text] {
-  text-decoration: line-through;
-  color: #aaa;
 }
 
 [data-button-delete] {
   margin-left: 0.5rem;
 }
 
-button {
-  cursor: pointer;
-}
-
-[data-button-edit] {
-  margin-left: 0.5rem;
-}
-
-.filter-form {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  border-bottom: 1px solid black;
-  padding-bottom: 0.5rem;
-}
-
-.filter-form-group {
-  display: flex;
-  gap: 0.25rem;
-}
-
-/* style.css */
-button {
-  user-select: none;
-  caret-color: transparent;
-}
-
 .card {
-  background-color: rgb(17, 255, 179);
+  background-color: rgba(124, 255, 174, 0.61);
   width: 300px;
-  height: auto;
+  padding: 8px;
+  outline: 2px solid #333;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.toast.hide {
+  opacity: 0;
 }

@@ -4,15 +4,14 @@ import { useFocus } from "./useFocus";
 export const TodoItem = ({
   id,
   name,
-  completed,
-  toggleTodo,
+  description,
   deleteTodo,
   isEditing,
   editTodo,
   saveTodo,
 }) => {
   const [editedName, setEditedName] = useState(name); // set a state using name as initial value
-
+  const [editDescription, setEditDescription] = useState(description)
   const [inputRef, setFocus] = useFocus();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export const TodoItem = ({
                 id="form edit"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  saveTodo(id, editedName);
+                  saveTodo(id, editedName, editDescription);
                 }}
               >
                 <span>Title: </span>
@@ -41,7 +40,13 @@ export const TodoItem = ({
                 />
                 <button type="submit">Save</button>
               </form>
-              <p className="card-text">This is a simple card description.</p>
+              <span>Description: </span>
+              <textarea
+                ref={inputRef}
+                placeholder="Description"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
             </div>
           </div>
         </>
@@ -49,14 +54,8 @@ export const TodoItem = ({
         <>
           <div className="card">
             <div className="card-content">
-              <h3 className="card-title">{name}</h3>
-              <p className="card-text">This is a simple card description.</p>
-              <input
-                type="checkbox"
-                data-list-item-checkbox
-                checked={completed}
-                onChange={(e) => toggleTodo(id, e.target.checked)}
-              />
+              <h3 className="card-title">Title: {name}</h3>
+              <h3 className="card-text">Description: {description}</h3>
               <button onClick={() => editTodo(id)}>Edit</button>
               <button
                 data-button-delete
