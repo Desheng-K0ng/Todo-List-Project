@@ -44,6 +44,7 @@ const App = () => {
 
     // clear everything filled in the put block
     setNewTodoName("");
+    setDescription("")
 
   }
 
@@ -94,6 +95,8 @@ const App = () => {
           color: isDarkMode ? "white" : "#333",
         }}
       >
+        {/* Main Html */}
+        <h1>Todo - List</h1>
         <button onClick={toggleDarkMode}>
           Change Mode is now : {isDarkMode ? "Dark" : "White"}
         </button>
@@ -108,15 +111,17 @@ const App = () => {
         />
 
         <ul id="list">
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              {...todo}
-              deleteTodo={deleteTodo}
-              editTodo={editTodo}
-              saveTodo={saveTodo}
-            />
-          ))}
+          <div className="card-container">
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                {...todo}
+                deleteTodo={deleteTodo}
+                editTodo={editTodo}
+                saveTodo={saveTodo}
+              />
+            ))}
+          </div>
         </ul>
       </div>
     </>

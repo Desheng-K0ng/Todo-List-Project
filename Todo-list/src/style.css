@@ -26,7 +26,7 @@ button {
 
 .card {
   background-color: rgba(124, 255, 174, 0.61);
-  width: 300px;
+  width: auto;
   padding: 8px;
   outline: 2px solid #333;
 }
@@ -45,4 +45,18 @@ button {
 
 .toast.hide {
   opacity: 0;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  /* 横向排列，默认也是row */
+  flex-wrap: wrap;
+  /* 如果想换行可以加这个 */
+  gap: 1rem;
+  /* 卡片之间的间距 */
+  justify-content: flex-start;
+  /* 从左开始排列 */
+  align-items: flex-start;
+  /* 从上对齐 */
 }
