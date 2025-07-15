@@ -5,13 +5,14 @@ export const TodoItem = ({
   id,
   name,
   description,
+  dueDate,
   deleteTodo,
   isEditing,
   editTodo,
   saveTodo,
 }) => {
   const [editedName, setEditedName] = useState(name); // set a state using name as initial value
-  const [editDescription, setEditDescription] = useState(description)
+  const [editDescription, setEditDescription] = useState(description);
   const [inputRef, setFocus] = useFocus();
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export const TodoItem = ({
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
               />
+              {dueDate && <p>Due: {dueDate}</p>}
             </div>
           </div>
         </>
@@ -65,6 +67,7 @@ export const TodoItem = ({
               >
                 Delete
               </button>
+              {dueDate && <p>Due: {dueDate}</p>}
             </div>
           </div>
         </>
