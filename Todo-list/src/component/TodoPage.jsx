@@ -4,6 +4,7 @@ import { useToggle } from "./useToggle";
 import Card from "./Card";
 
 export default function TodoPage() {
+  const [showModal, setShowModal] = useState(false);
   const [newTodoName, setNewTodoName] = useState("");
   const [description, setDescription] = useState("");
   const [todos, setTodos] = useState([]);
@@ -32,7 +33,8 @@ export default function TodoPage() {
     ]);
     setNewTodoName("");
     setDescription("");
-    setDueDate(""); // 清空输入
+    setDueDate("");
+    setShowModal(false);
   }
 
   function editTodo(id) {
@@ -86,6 +88,7 @@ export default function TodoPage() {
       </button>
       <h1>Todo - List</h1>
       <p>The length of the todos is now {todos.length}</p>
+      <button onClick={() => setShowModal(true)}>Add New Todo</button>
       <Card
         newTodoName={newTodoName}
         description={description}
@@ -93,6 +96,7 @@ export default function TodoPage() {
         setDescription={setDescription}
         setDueDate={setDueDate}
         addNewTodo={addNewTodo}
+        showModal={showModal}
       />
       <ul id="list">
         <div className="card-container">
